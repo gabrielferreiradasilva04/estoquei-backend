@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: estoquei-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/estoquei
+    username: uzumaki
+    password: uzumaki
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  config:
+    secrete: ${JWT_SECRET:my-secret-pipi}
