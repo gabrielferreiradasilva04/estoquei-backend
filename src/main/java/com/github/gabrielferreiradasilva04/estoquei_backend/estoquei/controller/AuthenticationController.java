@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.AuthenticationDto;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.LoginResponseDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.UserRepository;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.service.TokenService;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,18 +21,20 @@ public class AuthenticationController {
 	
 	private AuthenticationManager authenticationManager;
 	private UserRepository userRepository;
+	private TokenService tokenService;
 	
-	public AuthenticationController(AuthenticationManager authenticationManager, UserRepository repository) {
+	public AuthenticationController(AuthenticationManager authenticationManager, UserRepository repository, TokenService tokenService) {
 		this.authenticationManager = authenticationManager;
 		this.userRepository = repository;
+		this.tokenService = tokenService;
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody AuthenticationDto auth){
 		var userNamePassword = new UsernamePasswordAuthenticationToken(auth.email(), auth.password());
 		var authenticate = this.authenticationManager.authenticate(userNamePassword);
-		
-		return ResponseEntity.ok().build();
+		var token = tokenService.generateToken((UserEntity) authenticate.getPrincipal());
+		return ResponseEntity.ok(new LoginResponseDto(token));
 	}
 	
 	@PostMapping("/register")

@@ -10,3 +10,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+
+app:
+  config:
+    secrete: ${JWT_SECRET:my-secret-pipi}
