@@ -10,7 +10,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 	
 	private UserRepository userRepository;
