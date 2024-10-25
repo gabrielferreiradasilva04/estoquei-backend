@@ -10,7 +10,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.Stoc
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.StockRepository;
 
 @RestController
-@RequestMapping("/stock")
+@RequestMapping("/stocks")
 public class StockController {
 
 	private StockRepository stockRepository;

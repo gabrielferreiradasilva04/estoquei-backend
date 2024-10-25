@@ -1,6 +1,6 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +13,8 @@ public abstract class PeopleEntity {
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
-	private LocalDate registrationDate;
-	private LocalDate updateDate;
+	private LocalDateTime registrationDate;
+	private LocalDateTime updateDate;
 	private Boolean active;
 	
 	public PeopleEntity() {
