@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.config.SecurityFilterConfiguration;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.AuthenticationDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.LoginResponseDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.UserRepository;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.service.TokenService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,10 +34,19 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody AuthenticationDto auth){
+	public ResponseEntity<?> login(@RequestBody AuthenticationDto auth, HttpServletResponse response){
+		//processo de autenticação
 		var userNamePassword = new UsernamePasswordAuthenticationToken(auth.email(), auth.password());
 		var authenticate = this.authenticationManager.authenticate(userNamePassword);
 		var token = tokenService.generateToken((UserEntity) authenticate.getPrincipal());
+		
+		//armazenar o token em um cookie no cliente
+		Cookie jwtCookie = new Cookie(SecurityFilterConfiguration.TOKEN_JWT, token);
+		jwtCookie.setHttpOnly(true); //estou protegendo o meu token contra scripts javascript
+		jwtCookie.setPath("/"); //especificando para quais endpoints o token vai ser mandado
+		jwtCookie.setMaxAge(24*60*60);//define a expiração do token para 1 dia inteiro
+		response.addCookie(jwtCookie);
+		//retornar resposta ao cliente.
 		return ResponseEntity.ok(new LoginResponseDto(token));
 	}
 	

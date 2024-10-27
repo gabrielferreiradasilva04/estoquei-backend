@@ -13,6 +13,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.service.Tok
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,8 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter{
 	
 	TokenService tokenService;
 	UserRepository userRepository;
+	
+	public static String TOKEN_JWT = "tokenJwt";
 	
 	public SecurityFilterConfiguration(TokenService tokenService, UserRepository userRepository) {
 		this.tokenService = tokenService;
@@ -35,20 +38,33 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter{
 			var email = tokenService.validateToken(token);
 			UserDetails user = userRepository.findByEmail(email);
 			
-			var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-			
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+			if(user != null) {
+				var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}	
 		}
 		filterChain.doFilter(request, response);
 	}
 	
 	private String recoverToken(HttpServletRequest request) {
 		var authHeader = request.getHeader("Authorization");
-		if(authHeader == null) {
-			return null;
+		if(authHeader != null && authHeader.startsWith("Bearer ")) {
+			return authHeader.replace("Bearer ", "");		
 		}else {
-			return authHeader.replace("Bearer ", "");
+			return getTokenFromCookie(request);
 		}
 	}
+	private String getTokenFromCookie(HttpServletRequest request) {
+		if(request.getCookies() != null) {
+			for(Cookie cookie : request.getCookies()) {
+				if(TOKEN_JWT.equals(cookie.getName())) {
+					return cookie.getValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	
 
 }
