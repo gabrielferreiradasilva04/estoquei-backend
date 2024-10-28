@@ -1,9 +1,11 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.common;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,4 +41,14 @@ public class GlobalExceptionHandler {
 				fieldErrorsDTO
 				);
 	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ResponseErrorDto handleAccessDeniedException(AccessDeniedException e) {
+		return new ResponseErrorDto(
+				HttpStatus.FORBIDDEN.value(),
+				"Acesso negado", null
+				);
+	}
+
 }
