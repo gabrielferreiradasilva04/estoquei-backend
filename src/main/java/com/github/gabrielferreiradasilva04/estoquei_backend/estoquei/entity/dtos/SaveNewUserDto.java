@@ -6,7 +6,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.User
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record UserEntityDto(@NotBlank(message="Campo obrigatorio") String firstName, 
+public record SaveNewUserDto(@NotBlank(message="Campo obrigatorio") String firstName, 
 		@NotBlank(message="Campo obrigatorio") String lastName, @NotBlank(message="Campo obrigatorio") String phoneNumber,
 		@NotBlank(message="Campo obrigatorio") String email, @NotBlank(message="Campo obrigatorio") String password,
 		@NotBlank(message="Campo obrigatorio") String nickname, @NotNull(message="Campo obrigatorio") Boolean active,
