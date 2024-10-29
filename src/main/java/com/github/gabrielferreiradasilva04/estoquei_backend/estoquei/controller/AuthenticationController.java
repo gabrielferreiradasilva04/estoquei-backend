@@ -14,7 +14,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.config.Secu
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.AuthenticationDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.LoginResponseDto;
-import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.UserEntityDto;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.SaveNewUserDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.UserRepository;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.service.TokenService;
 
@@ -60,7 +60,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody @Valid UserEntityDto userDto){
+	public ResponseEntity<?> register(@RequestBody @Valid SaveNewUserDto userDto){
 		UserEntity user = userDto.toUserEntity(); 
 		if(this.userRepository.findByEmail(user.getEmail()) != null) {
 			return ResponseEntity.badRequest().build();
