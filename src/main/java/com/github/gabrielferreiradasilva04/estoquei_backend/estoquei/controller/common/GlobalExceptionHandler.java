@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.FieldErrorDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.ResponseErrorDto;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.UserNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -49,6 +50,15 @@ public class GlobalExceptionHandler {
 				HttpStatus.FORBIDDEN.value(),
 				"Acesso negado", null
 				);
+	}
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ResponseErrorDto handleUserNotFoundException(UserNotFoundException e) {
+		return new ResponseErrorDto(
+				HttpStatus.NOT_FOUND.value(),
+				e.getMessage(), 
+				null);
 	}
 
 }
