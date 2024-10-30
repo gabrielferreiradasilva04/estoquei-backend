@@ -1,8 +1,12 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +40,10 @@ public class StockController {
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	@PutMapping("/{id}")
+	public void update(@PathVariable String idString, @RequestBody SaveStockDto dto) {
+		UUID sotckId = UUID.fromString(idString);
 	}
 }

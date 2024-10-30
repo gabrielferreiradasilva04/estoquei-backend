@@ -1,5 +1,6 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -9,6 +10,8 @@ import java.util.UUID;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +31,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tb_stock")
 @EntityListeners(AuditingEntityListener.class)
-public class StockEntity {
+public class StockEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
@@ -50,6 +57,7 @@ public class StockEntity {
 	@Column
 	private LocalDateTime updateDate;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "stocks")
 	private Set<UserEntity> users = new HashSet<UserEntity>();
 
