@@ -1,13 +1,22 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +27,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_stock")
+@EntityListeners(AuditingEntityListener.class)
 public class StockEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -32,6 +42,23 @@ public class StockEntity {
 	private String contact;
 	@Column
 	private Double totalCapacity;
+	@CreatedDate
 	@Column(nullable = false)
 	private LocalDate registrationDate;
+	
+	@LastModifiedDate
+	@Column
+	private LocalDateTime updateDate;
+	
+	@ManyToMany(mappedBy = "stocks")
+	private Set<UserEntity> users = new HashSet<UserEntity>();
+
+	@Override
+	public String toString() {
+		return "StockEntity [id=" + id + ", title=" + title + ", description=" + description + ", address=" + address
+				+ ", contact=" + contact + ", totalCapacity=" + totalCapacity + ", registrationDate=" + registrationDate
+				+ ", updateDate=" + updateDate + "]";
+	}
+	
+	
 }

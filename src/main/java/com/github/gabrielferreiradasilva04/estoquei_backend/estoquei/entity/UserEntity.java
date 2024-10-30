@@ -2,7 +2,9 @@ package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -19,18 +21,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -66,6 +70,15 @@ public class UserEntity extends PeopleEntity implements UserDetails{
 	@Column
 	private UserRole userType;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "tb_user_stocks",
+			joinColumns = @JoinColumn(name="user_id"),
+			inverseJoinColumns = @JoinColumn(name="stock_id")
+		)
+	private Set<StockEntity> stocks = new HashSet<StockEntity>();
+	
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		if(this.userType == UserRole.ADMINISTRADOR) {
@@ -99,6 +112,13 @@ public class UserEntity extends PeopleEntity implements UserDetails{
 	public boolean isEnabled() {
 		return true; /*especifica se o usuário está ativo*/
 	}
+	@Override
+	public String toString() {
+		return "UserEntity [id=" + id + ", nickname=" + nickname + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", phoneNumber=" + phoneNumber + ", registrationDate=" + registrationDate + ", updateDate="
+				+ updateDate + ", active=" + active + ", password=" + password + ", email=" + email + ", userType="
+				+ userType + "]";
+	}
 	
-
+	
 }
