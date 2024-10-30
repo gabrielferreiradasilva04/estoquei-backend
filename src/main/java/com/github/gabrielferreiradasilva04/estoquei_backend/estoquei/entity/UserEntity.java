@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.config.UserRole;
 
 import jakarta.persistence.Column;
@@ -70,6 +71,7 @@ public class UserEntity extends PeopleEntity implements UserDetails{
 	@Column
 	private UserRole userType;
 	
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "tb_user_stocks",
