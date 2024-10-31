@@ -41,9 +41,15 @@ public class StockController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@PutMapping("/{id}")
 	public void update(@PathVariable String idString, @RequestBody SaveStockDto dto) {
-		UUID sotckId = UUID.fromString(idString);
+		try {
+			UUID sotckId = UUID.fromString(idString);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 }
