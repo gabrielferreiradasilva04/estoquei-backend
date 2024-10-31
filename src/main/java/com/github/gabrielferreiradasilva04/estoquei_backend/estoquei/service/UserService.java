@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
-import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.UserNotFoundException;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.UserRepository;
 
 @Service
@@ -17,7 +17,7 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public UserEntity update(UUID id, UserEntity user) throws UserNotFoundException {
+	public UserEntity update(UUID id, UserEntity user) throws EntityNotFoundException {
 		UserEntity userFind = this.findById(id);
 		if(userFind != null) {
 			userFind.setNickname(user.getNickname());
@@ -28,7 +28,7 @@ public class UserService {
 			
 			return this.userRepository.save(userFind);
 		}
-		throw new UserNotFoundException("Usuário não encontrado");
+		throw new EntityNotFoundException("Usuário não encontrado");
 	}
 
 	public UserEntity findById(UUID id) {

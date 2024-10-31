@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.FieldErrorDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.ResponseErrorDto;
-import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.UserNotFoundException;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -51,9 +51,9 @@ public class GlobalExceptionHandler {
 				);
 	}
 	
-	@ExceptionHandler(UserNotFoundException.class)
+	@ExceptionHandler(EntityNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ResponseErrorDto handleUserNotFoundException(UserNotFoundException e) {
+	public ResponseErrorDto handleUserNotFoundException(EntityNotFoundException e) {
 		return new ResponseErrorDto(
 				HttpStatus.NOT_FOUND.value(),
 				e.getMessage(), 
