@@ -72,12 +72,7 @@ public class UserEntity extends PeopleEntity implements UserDetails{
 	private UserRole userType;
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "tb_user_stocks",
-			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="stock_id")
-		)
+	@ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
 	private Set<StockEntity> stocks = new HashSet<StockEntity>();
 	
 	
