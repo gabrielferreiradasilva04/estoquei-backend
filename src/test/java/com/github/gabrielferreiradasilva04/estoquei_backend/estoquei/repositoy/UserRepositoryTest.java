@@ -19,7 +19,7 @@ public class UserRepositoryTest {
 	
 	@Test
 	public void findUserStocks(){
-		List<StockEntity> list = this.repository.findUserStocks(UUID.fromString("5b96b6a2-56fc-4554-b378-d5cf91822072"));
+		List<StockEntity> list = this.repository.findUserStocks(UUID.fromString("60eacb7d-2480-40af-a649-d8336612d8f1"));
 		list.forEach(System.out::println);
 	}
 	@Test

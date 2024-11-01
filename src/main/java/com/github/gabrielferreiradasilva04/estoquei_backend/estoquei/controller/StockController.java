@@ -43,13 +43,31 @@ public class StockController {
 	}
 
 	@PutMapping("/{id}")
-	public void update(@PathVariable String idString, @RequestBody SaveStockDto dto) {
+	public ResponseEntity<Object> update(@PathVariable String id, @RequestBody SaveStockDto dto) {
 		try {
-			UUID sotckId = UUID.fromString(idString);
+			UUID sotckId = UUID.fromString(id);
+			StockEntity stock = this.saveStockMapper.toEntity(dto);
+			this.stockService.update(sotckId, stock);
+			return ResponseEntity.ok().build();
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
 		}
-
+	}
+	
+	@PutMapping("/{stockId}/{userId}")
+	public ResponseEntity<Object> addUserOnStock(@PathVariable String userId, 
+			@PathVariable String stockId){
+		try {
+			UUID userUUID = UUID.fromString(userId);
+			UUID stockUUI = UUID.fromString(stockId);
+			
+			this.stockService.addUserOnStock(userUUID, stockUUI);
+			return ResponseEntity.ok().build();
+			
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
+		}
+		
 	}
 }
