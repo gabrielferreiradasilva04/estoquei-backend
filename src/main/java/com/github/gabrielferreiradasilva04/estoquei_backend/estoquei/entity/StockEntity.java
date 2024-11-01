@@ -11,15 +11,20 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,9 +63,37 @@ public class StockEntity implements Serializable{
 	private LocalDateTime updateDate;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "stocks")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "tb_stock_users",
+			joinColumns = @JoinColumn(name="stock_id"),
+			inverseJoinColumns = @JoinColumn(name="user_id")
+			)
 	private Set<UserEntity> users = new HashSet<UserEntity>();
 
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "tb_stock_clients",
+			joinColumns = @JoinColumn(name="stock_id"),
+			inverseJoinColumns = @JoinColumn(name="client_id")
+			)
+	private Set<ClientEntity> clients = new HashSet<ClientEntity>();
+	
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "tb_stock_suppliers",
+			joinColumns = @JoinColumn(name="stock_id"),
+			inverseJoinColumns = @JoinColumn(name="supplier_id")
+			)
+	private Set<SupplierEntity> suppliers = new HashSet<SupplierEntity>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
+	private Set<ProductEntity> products = new HashSet<ProductEntity>();
+	
 	@Override
 	public String toString() {
 		return "StockEntity [id=" + id + ", title=" + title + ", description=" + description + ", address=" + address
