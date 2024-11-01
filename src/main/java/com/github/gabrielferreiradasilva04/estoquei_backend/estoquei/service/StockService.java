@@ -9,8 +9,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.mapper.SaveStockMapper;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.SaveStockDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.DuplicateRecordException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.StockRepository;
@@ -23,14 +25,16 @@ public class StockService {
 	
 	private final StockRepository stockRepository;
 	private final UserRepository userRepository;
+	private final SaveStockMapper stockMapper;
 
-	public StockService(StockRepository repository, UserRepository userRepository) {
+	public StockService(StockRepository repository, UserRepository userRepository, SaveStockMapper mapper) {
 		this.stockRepository = repository;
 		this.userRepository = userRepository;
+		this.stockMapper = mapper;
 	}
 	
 	@Transactional
-	public StockEntity save(@NotNull UUID user_id, @NotNull StockEntity stock) {
+	public SaveStockDto save(@NotNull UUID user_id, @NotNull StockEntity stock) {
 		if(user_id != null && stock != null) {
 			Optional<UserEntity> userOptional = this.userRepository.findById(user_id);
 			if(userOptional.isPresent()) {
@@ -62,7 +66,7 @@ public class StockService {
 				throw new EntityNotFoundException("Usuário não encontrado");
 			}
 			
-			return stock;
+			return this.stockMapper.toDto(stock);
 		}
 		
 		return null;
@@ -100,8 +104,6 @@ public class StockService {
 		Set<UserEntity> stockUsers = stockEntity.getUsers();
 		
 		if(userStocks.contains(stockEntity)) {
-			throw new DuplicateRecordException("Usuario ja vinculado ao estoque");
-		}else if(stockUsers.contains(userEntity)) {
 			throw new DuplicateRecordException("Usuario ja vinculado ao estoque");
 		}
 		
