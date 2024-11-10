@@ -11,7 +11,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -37,9 +36,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_stock")
 @EntityListeners(AuditingEntityListener.class)
 public class StockEntity implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -93,6 +90,22 @@ public class StockEntity implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
 	private Set<ProductEntity> products = new HashSet<ProductEntity>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
+	private Set<CategoryEntity> categories = new HashSet<CategoryEntity>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
+	private Set<DepositEntity> deposits = new HashSet<DepositEntity>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
+	private Set<LocationEntity> locations = new HashSet<LocationEntity>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
+	private Set<TransactionEntity> transactions = new HashSet<TransactionEntity>();
 	
 	@Override
 	public String toString() {

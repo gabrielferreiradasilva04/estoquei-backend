@@ -23,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,5 +61,9 @@ public class CategoryEntity implements Serializable{
 			inverseJoinColumns = @JoinColumn(name="product_id")
 			)
 	private List<ProductEntity> products = new ArrayList<ProductEntity>();
+	@ManyToOne
+	@JoinColumn(name = "stock_id")
+	@JsonIgnore
+	private StockEntity stock;
 
 }

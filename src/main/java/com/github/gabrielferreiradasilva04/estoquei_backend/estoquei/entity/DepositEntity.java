@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -20,7 +22,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,6 +56,11 @@ public class DepositEntity implements Serializable{
 	@JsonIgnore
 	@ManyToMany(mappedBy = "deposits", fetch = FetchType.LAZY)
 	private List<ProductEntity> products = new ArrayList<ProductEntity>();
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "stock_id")
+	private StockEntity stock;
 
 	
 }
