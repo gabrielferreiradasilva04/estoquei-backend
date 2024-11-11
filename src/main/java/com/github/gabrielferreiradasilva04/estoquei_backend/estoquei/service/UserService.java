@@ -1,9 +1,11 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.UserRepository;
@@ -38,5 +40,11 @@ public class UserService {
 		}
 		return optional.get();
 	}
+	
+	public List<StockEntity> findUserStocks(UUID userId){
+		return this.userRepository.findUserStocks(userId);
+	}
+
+
 
 }

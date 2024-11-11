@@ -43,6 +43,8 @@ public class AuthenticationController {
 		var userNamePassword = new UsernamePasswordAuthenticationToken(auth.email(), auth.password());
 		var authenticate = this.authenticationManager.authenticate(userNamePassword);
 		var token = tokenService.generateToken((UserEntity) authenticate.getPrincipal());
+		UserEntity user = (UserEntity) authenticate.getPrincipal();
+		String uuid = user.getId().toString();
 		
 		//armazenar o token em um cookie no cliente
 		Cookie jwtCookie = new Cookie(SecurityFilterConfiguration.TOKEN_JWT, token);
@@ -56,7 +58,7 @@ public class AuthenticationController {
 				jwtCookie.getName(), jwtCookie.getValue(), jwtCookie.getPath(), jwtCookie.getMaxAge(), sameSite));
 		response.addCookie(jwtCookie);
 		//retornar resposta ao cliente.
-		return ResponseEntity.ok(new LoginResponseDto(token));
+		return ResponseEntity.ok(new LoginResponseDto(uuid));
 	}
 	
 	@PostMapping("/register")
