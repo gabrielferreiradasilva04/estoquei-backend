@@ -15,4 +15,11 @@ public interface StockRepository extends JpaRepository<StockEntity, UUID> {
 	@Query("Select u from UserEntity u join u.stocks s where s.id = :stockId")
 	Set<UserEntity> findStockUsers(@Param("stockId") UUID stockId);
 	
+	/***
+	 * Validar estoque existente antes de adicionar um novo estoque
+	 * @param title
+	 * @param address
+	 * @return verdadeiro caso encontre e falso caso não encontre.
+	 */
+	boolean existsByTitleAndAddress(String title, String address);
 }

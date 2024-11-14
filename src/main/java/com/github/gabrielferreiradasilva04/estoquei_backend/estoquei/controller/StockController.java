@@ -44,12 +44,11 @@ public class StockController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> update(@PathVariable String id, @RequestBody SaveStockDto dto) {
+	public ResponseEntity<Object> update(@PathVariable String id, @RequestBody @Valid SaveStockDto dto) {
 		try {
 			UUID sotckId = UUID.fromString(id);
 			StockEntity stock = this.saveStockMapper.toEntity(dto);
-			this.stockService.update(sotckId, stock);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok().body(this.stockService.update(sotckId, stock));
 
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.FieldErrorDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.ResponseErrorDto;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.DuplicateRecordException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
 
 @RestControllerAdvice
@@ -37,7 +38,7 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseErrorDto(
 				HttpStatus.UNPROCESSABLE_ENTITY.value(),
-				"Erro de validação", 
+				"Erro de validação. Verifique os campos obrigatórios", 
 				fieldErrorsDTO
 				);
 	}
@@ -57,6 +58,14 @@ public class GlobalExceptionHandler {
 		return new ResponseErrorDto(
 				HttpStatus.NOT_FOUND.value(),
 				e.getMessage(), 
+				null);
+	}
+	
+	@ExceptionHandler(DuplicateRecordException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ResponseErrorDto handleDuplicadeRecordException(DuplicateRecordException e) {
+		return new ResponseErrorDto(HttpStatus.BAD_REQUEST.value()
+				, e.getMessage(),
 				null);
 	}
 
