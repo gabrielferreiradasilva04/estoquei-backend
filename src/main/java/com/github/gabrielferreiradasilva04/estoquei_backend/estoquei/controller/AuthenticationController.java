@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.config.SecurityFilterConfiguration;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.mapper.ResponseUserMapper;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.AuthenticationDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.LoginResponseDto;
@@ -30,11 +31,13 @@ public class AuthenticationController {
 	private AuthenticationManager authenticationManager;
 	private UserRepository userRepository;
 	private TokenService tokenService;
+	private ResponseUserMapper userMapper;
 	
-	public AuthenticationController(AuthenticationManager authenticationManager, UserRepository repository, TokenService tokenService) {
+	public AuthenticationController(AuthenticationManager authenticationManager, UserRepository repository, TokenService tokenService, ResponseUserMapper userMapper) {
 		this.authenticationManager = authenticationManager;
 		this.userRepository = repository;
 		this.tokenService = tokenService;
+		this.userMapper = userMapper;
 	}
 
 	@PostMapping("/login")
@@ -44,7 +47,6 @@ public class AuthenticationController {
 		var authenticate = this.authenticationManager.authenticate(userNamePassword);
 		var token = tokenService.generateToken((UserEntity) authenticate.getPrincipal());
 		UserEntity user = (UserEntity) authenticate.getPrincipal();
-		String uuid = user.getId().toString();
 		
 		//armazenar o token em um cookie no cliente
 		Cookie jwtCookie = new Cookie(SecurityFilterConfiguration.TOKEN_JWT, token);
@@ -58,7 +60,7 @@ public class AuthenticationController {
 				jwtCookie.getName(), jwtCookie.getValue(), jwtCookie.getPath(), jwtCookie.getMaxAge(), sameSite));
 		response.addCookie(jwtCookie);
 		//retornar resposta ao cliente.
-		return ResponseEntity.ok(new LoginResponseDto(uuid));
+		return ResponseEntity.ok(userMapper.toDto(user));
 	}
 	
 	@PostMapping("/register")
