@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -69,7 +71,7 @@ public class ProductEntity implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "productEntity", fetch = FetchType.LAZY)
-	private Set<ProductPhotoEntity> produtcPhotos = new HashSet<ProductPhotoEntity>();
+	private List<ProductPhotoEntity> produtcPhotos = new ArrayList<ProductPhotoEntity>();
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -83,11 +85,11 @@ public class ProductEntity implements Serializable{
 			joinColumns = @JoinColumn(name="product_id"),
 			inverseJoinColumns = @JoinColumn(name="supplier_id")
 			)
-	private Set<SupplierEntity> suppliers = new HashSet<SupplierEntity>();
+	private List<SupplierEntity> suppliers = new ArrayList<SupplierEntity>();
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
-	private Set<CategoryEntity> categories = new HashSet<CategoryEntity>();
+	private List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
 	
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -96,11 +98,11 @@ public class ProductEntity implements Serializable{
 			joinColumns = @JoinColumn(name="product_id"),
 			inverseJoinColumns = @JoinColumn(name="deposit_id")
 			)
-	private Set<DepositEntity> deposits = new HashSet<DepositEntity>();
+	private List<DepositEntity> deposits = new ArrayList<DepositEntity>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	private Set<MovementEntity> movements = new HashSet<MovementEntity>();
+	private List<MovementEntity> movements = new ArrayList<MovementEntity>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="location_id")

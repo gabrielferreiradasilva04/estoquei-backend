@@ -35,7 +35,7 @@ public class ProductPhotoEntity implements Serializable{
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	@Column(nullable = false)
-	private URI url;
+	private String url;
 	@CreatedDate
 	@Column(nullable = false)
 	private LocalDate registerDate;

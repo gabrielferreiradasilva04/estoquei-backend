@@ -17,6 +17,7 @@ public interface SaveUserMapper {
 	@Mapping(target = "registrationDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
 	@Mapping(target = "authorities", ignore = true)
+	@Mapping(target = "stocks", ignore = true)
 	UserEntity toEntity(SaveNewUserDto dto);
 	
 	
