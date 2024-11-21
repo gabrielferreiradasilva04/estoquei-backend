@@ -2,7 +2,7 @@ package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dto
 
 import java.util.UUID;
 
-public record UserResponseDto(UUID id, String nickName, String firstName, String lastName, 
+public record UserResponseDto(UUID id, String nickname, String firstName, String lastName, 
 		String phoneNumber, String email ) {
 
 }

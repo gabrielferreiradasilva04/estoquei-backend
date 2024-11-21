@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,6 +31,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -38,11 +40,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProductEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
+	@EqualsAndHashCode.Include
 	private UUID id;
 	@Column(nullable = false, length = 200)
 	private String code;
@@ -61,17 +65,20 @@ public class ProductEntity implements Serializable{
 	@CreatedDate
 	@Column(nullable = false)
 	private LocalDate registrationDate;
+	@LastModifiedDate
 	@Column(nullable = false)
 	private LocalDateTime updateDate;
 	
 	
-	@ManyToOne
+	@ManyToOne(
+			fetch = FetchType.LAZY
+			)
 	@JoinColumn(name = "unit_measure_id")
 	private UnitMeasureEntity unitMeasure;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "productEntity", fetch = FetchType.LAZY)
-	private List<ProductPhotoEntity> produtcPhotos = new ArrayList<ProductPhotoEntity>();
+	private List<ProductPhotoEntity> productPhotos = new ArrayList<ProductPhotoEntity>();
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -85,11 +92,11 @@ public class ProductEntity implements Serializable{
 			joinColumns = @JoinColumn(name="product_id"),
 			inverseJoinColumns = @JoinColumn(name="supplier_id")
 			)
-	private List<SupplierEntity> suppliers = new ArrayList<SupplierEntity>();
+	private Set<SupplierEntity> suppliers = new HashSet<SupplierEntity>();
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
-	private List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
+	private Set<CategoryEntity> categories = new HashSet<CategoryEntity>();
 	
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -98,7 +105,7 @@ public class ProductEntity implements Serializable{
 			joinColumns = @JoinColumn(name="product_id"),
 			inverseJoinColumns = @JoinColumn(name="deposit_id")
 			)
-	private List<DepositEntity> deposits = new ArrayList<DepositEntity>();
+	private Set<DepositEntity> deposits = new HashSet<DepositEntity>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)

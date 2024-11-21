@@ -40,7 +40,7 @@ public class UnitMeasureEntity implements Serializable{
 	private String code;
 	@CreatedDate
 	@Column(nullable = false)
-	private LocalDate registrationDate;
+	private LocalDate registerDate;
 	@Column(nullable = false)
 	private LocalDateTime updateDate;
 	

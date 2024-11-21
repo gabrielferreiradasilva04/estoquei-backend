@@ -10,7 +10,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos
 public interface UnitMeasureMapper {
 
 	@Mapping(target = "products", ignore = true)
-	@Mapping(target = "registrationDate", ignore = true)
+	@Mapping(target = "registerDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
 	UnitMeasureEntity toEntity(ResponseUnitMeasureDto dto);
 	
