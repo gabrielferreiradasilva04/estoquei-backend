@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.mapper.CategoryMapper;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.CategoryEntity;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.CategoryResponseDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.CategoryRepository;
 
@@ -21,8 +22,8 @@ public class CategoryService {
 		this.categoryMapper = mapper;
 	}
 	
-	public List<CategoryResponseDto> listAll(){
-		List<CategoryEntity> list = this.categoryRepository.findAll();
+	public List<CategoryResponseDto> listAll(StockEntity stockEntity){
+		List<CategoryEntity> list = this.categoryRepository.findByStock(stockEntity);
 		List<CategoryResponseDto> listDto = list.stream()
 				.map(entity -> this.categoryMapper.entityToResponseDto(entity))
 				.collect(Collectors.toList());

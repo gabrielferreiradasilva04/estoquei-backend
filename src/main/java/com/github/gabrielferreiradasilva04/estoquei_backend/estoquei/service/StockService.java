@@ -1,7 +1,6 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -13,7 +12,6 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.mapper.SaveStockResponseMapper;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UserEntity;
-import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.SaveStockDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.SaveStockResponseDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.DuplicateRecordException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
@@ -122,5 +120,13 @@ public class StockService {
 		this.userRepository.save(userEntity);
 		this.stockRepository.save(stockEntity);
 
+	}
+	
+	public StockEntity findByid(UUID id) {
+		var stockOptional =  this.stockRepository.findById(id);
+		if(stockOptional.isEmpty()) {
+			throw new EntityNotFoundException("Estoque nao encontrado");
+		}
+		return stockOptional.get();
 	}
 }

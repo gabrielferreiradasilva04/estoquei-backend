@@ -20,6 +20,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
 			join fetch p.unitMeasure u
 			join fetch p.location l
 			join fetch p.stock
+			join fetch p.suppliers
+			join fetch p.deposits
+			join fetch p.categories
 			""")
 	List<ProductEntity> findAllWithMainRelations();
 	

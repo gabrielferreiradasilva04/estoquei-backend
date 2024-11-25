@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller.mapper.LocationMapper;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.LocationEntity;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.ResponseLocationDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.repository.LocationRepository;
 
@@ -20,8 +21,8 @@ public class LocationService {
 		this.mapper = mapper;
 	}
 	
-	public List<ResponseLocationDto> findAll(){
-		List<LocationEntity> listEntity = this.locationRepository.findAll();
+	public List<ResponseLocationDto> findAll(StockEntity stock){
+		List<LocationEntity> listEntity = this.locationRepository.findByStock(stock);
 		List<ResponseLocationDto> listDto = listEntity.stream()
 				.map(entity -> this.mapper.toDto(entity)).collect(Collectors.toList());
 		return listDto;

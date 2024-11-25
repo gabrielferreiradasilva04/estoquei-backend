@@ -2,6 +2,7 @@ package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.controller
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,12 +46,15 @@ public class ProductController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	@PutMapping
-	public ResponseEntity<?> update(@RequestBody @Valid UpdateProductDto dto){
-		
+	@PutMapping("/{productId}")
+	public ResponseEntity<?> update(@RequestBody @Valid UpdateProductDto dto, @PathVariable(name = "productId") String idString){
+		try {
 			var productEntity = this.mapper.updateDtoToEntity(dto);
 			return ResponseEntity.ok().body(this.productService.update(productEntity));
-		
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+			
 	}
 	
 	

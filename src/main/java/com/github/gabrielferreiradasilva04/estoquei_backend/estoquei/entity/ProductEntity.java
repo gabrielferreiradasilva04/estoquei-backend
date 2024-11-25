@@ -85,7 +85,6 @@ public class ProductEntity implements Serializable{
 	@JoinColumn(name="stock_id")
 	private StockEntity stock;
 	
-	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name="tb_product_suppliers",

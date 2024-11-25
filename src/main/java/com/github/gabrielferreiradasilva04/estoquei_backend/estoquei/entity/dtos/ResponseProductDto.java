@@ -1,14 +1,21 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.UUID;
 
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.CategoryEntity;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.DepositEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.LocationEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.SupplierEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UnitMeasureEntity;
 
-public record ResponseProductDto(String code,String description, 
-		BigDecimal priceCost, BigDecimal salePrice, 
+public record ResponseProductDto(UUID id,String code,String description, 
+		BigDecimal priceCost, BigDecimal salePrice, LocalDate registrationDate, LocalDateTime updateDate,
 		Double minimumStock, Boolean active,StockEntity stock, LocationEntity location,
-		UnitMeasureEntity unitMeasure) {
+		UnitMeasureEntity unitMeasure, Set<SupplierEntity> suppliers, Set<CategoryEntity> categories, Set<DepositEntity> deposits) {
 
 }
