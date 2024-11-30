@@ -1,16 +1,10 @@
 package com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +17,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -33,38 +26,29 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_deposit")
+@Table(name = "tb_brand")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DepositEntity implements Serializable{
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class BrandEntity implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@EqualsAndHashCode.Include
 	private UUID id;
 	@Column(nullable = false)
-	private String title;
-	@Column(nullable = false)
+	private String name;
+	@Column(length = 400)
 	private String description;
-	@CreatedDate
-	@Column(nullable = false)
-	private LocalDate registrationDate;
-	@LastModifiedDate
-	@Column(nullable = false)
-	private LocalDateTime updateDate;
-	private Boolean active;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "stock_id")
+	@JsonIgnore
 	private StockEntity stock;
 	
-	@OneToMany(mappedBy = "deposit", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Set<ProductDepositEntity> productDepositEntities = new HashSet<ProductDepositEntity>();
-
-	
+	private Set<ProductEntity> productEntities = new HashSet<ProductEntity>();
 }

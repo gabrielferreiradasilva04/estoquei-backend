@@ -93,26 +93,21 @@ public class ProductEntity implements Serializable{
 			)
 	private Set<SupplierEntity> suppliers = new HashSet<SupplierEntity>();
 	
-	@JsonIgnore
 	@ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
 	private Set<CategoryEntity> categories = new HashSet<CategoryEntity>();
-	
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "tb_product_desposits",
-			joinColumns = @JoinColumn(name="product_id"),
-			inverseJoinColumns = @JoinColumn(name="deposit_id")
-			)
-	private Set<DepositEntity> deposits = new HashSet<DepositEntity>();
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	private List<MovementEntity> movements = new ArrayList<MovementEntity>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="location_id")
 	private LocationEntity location;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	private Set<ProductDepositEntity> productDepositEntities = new HashSet<ProductDepositEntity>();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "brand_id")
+	private BrandEntity brand;
+	
 	
 	
 	

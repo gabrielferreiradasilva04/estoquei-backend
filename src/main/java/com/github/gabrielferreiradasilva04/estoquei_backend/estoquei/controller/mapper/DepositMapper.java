@@ -9,10 +9,10 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos
 @Mapper(componentModel = "spring")
 public interface DepositMapper {
 	
-	@Mapping(target = "products", ignore = true)
 	@Mapping(target = "registrationDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
 	@Mapping(target = "stock", ignore = true)
+	@Mapping(target = "productDepositEntities", ignore = true)
 	DepositEntity toEntity(ResponseDepositDto dto);
 	
 	ResponseDepositDto toDto(DepositEntity entity);

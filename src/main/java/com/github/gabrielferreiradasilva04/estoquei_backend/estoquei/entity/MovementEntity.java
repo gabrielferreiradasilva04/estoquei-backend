@@ -43,17 +43,15 @@ public class MovementEntity implements Serializable{
 	@Column(nullable = false, length = 400)
 	private String observation;
 	@Column
-	private BigDecimal unitPrice;
-	@Column
 	private BigDecimal total;
 	@Column
 	private String invoice;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_id")
-	private ProductEntity product;
+	@ManyToOne
+	@JoinColumn(name = "product_deposit_id")
+	private ProductDepositEntity productDeposit;
 	
-	@ManyToOne(fetch =FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="transaction_id")
 	private TransactionEntity transaction;
 	

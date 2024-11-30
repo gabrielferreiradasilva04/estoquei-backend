@@ -116,6 +116,9 @@ public class StockEntity implements Serializable{
 				+ ", contact=" + contact + ", totalCapacity=" + totalCapacity + ", registrationDate=" + registrationDate
 				+ ", updateDate=" + updateDate + "]";
 	}
+	@OneToMany(mappedBy = "stock")
+	@JsonIgnore
+	private Set<BrandEntity> brands = new HashSet<BrandEntity>();
 	
 	
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.BrandEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.CategoryEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.DepositEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.LocationEntity;
@@ -18,8 +19,8 @@ import jakarta.validation.constraints.NotNull;
 public record UpdateProductDto(@NotNull(message="Campo Obrigatorio") UUID id, @NotBlank(message = "Campo obrigatorio") String code, @NotBlank(message = "Campo Obrigatorio") String description, 
 		BigDecimal priceCost, BigDecimal salePrice, 
 		Double minimumStock, Double quantityStock, Boolean active, @NotNull(message = "Selecione um estoque") StockEntity stock, 
-		@NotEmpty(message = "Selecione ao menos um fornecedor") List<SupplierEntity> suppliers, @NotEmpty(message = "Selecione ao menos uma categoria")  List<CategoryEntity> categories, 
-		@NotEmpty(message = "Selecione ao menos um deposito") List<DepositEntity> deposits, @NotNull(message="Selecione uma localizacao") LocationEntity location,
-		@NotNull(message = "Selecione uma unidade de medida") UnitMeasureEntity unitMeasure) {
+		@NotEmpty(message = "Selecione ao menos uma categoria")  List<CategoryEntity> categories, 
+		@NotNull(message="Selecione uma localizacao") LocationEntity location,
+		@NotNull(message = "Selecione uma unidade de medida") UnitMeasureEntity unitMeasure, @NotNull(message = "Campo obrigatorio") BrandEntity brand, List<SupplierEntity> suppliers, List<DepositEntity> deposits) {
 
 }

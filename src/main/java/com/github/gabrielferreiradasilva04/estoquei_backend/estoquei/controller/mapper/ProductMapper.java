@@ -12,19 +12,20 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos
 public interface ProductMapper {
 	
 	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "movements", ignore = true)
 	@Mapping(target = "productPhotos", ignore = true)
 	@Mapping(target = "quantityStock", ignore = true)
 	@Mapping(target = "registrationDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
-	ProductEntity saveDtoToEntity(SaveProductDto dto);
+	@Mapping(target = "suppliers", ignore = true)
+	@Mapping(target = "productDepositEntities", ignore = true)
+	ProductEntity saveDtoToEntity(SaveProductDto dto); 
 	
-	@Mapping(target = "movements", ignore = true)
 	@Mapping(target = "productPhotos", ignore = true)
 	@Mapping(target = "quantityStock", ignore = true)
 	@Mapping(target = "registrationDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
-	ProductEntity updateDtoToEntity(UpdateProductDto dto);
+	@Mapping(target = "productDepositEntities", ignore = true)
+	ProductEntity updateDtoToEntity(UpdateProductDto dto);  
 	
 	SaveProductDto entityToSaveDto(ProductEntity entity);
 	

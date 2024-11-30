@@ -11,31 +11,33 @@ import org.springframework.data.repository.query.Param;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.ProductEntity;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.StockEntity;
 
-public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
-		
+public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
+
 	boolean existsByCodeAndDescriptionAndStock(String code, String description, StockEntity stock);
-	
+
 	@Query("""
-			select p from ProductEntity p
-			join fetch p.unitMeasure u
-			join fetch p.location l
-			join fetch p.stock
-			join fetch p.suppliers
-			join fetch p.deposits
-			join fetch p.categories
+			select distinct p from ProductEntity p
+			left join fetch p.unitMeasure u
+			left join fetch p.location l
+			left join fetch p.stock s
+			left join fetch p.suppliers r
+			left join fetch p.categories c
+			left join fetch p.brand b
+			left join fetch p.productDepositEntities pde
 			""")
 	List<ProductEntity> findAllWithMainRelations();
-	
+
 	@Query("""
-	        select p from ProductEntity p
-	        join fetch p.unitMeasure u
-	        join fetch p.location l
-	        join fetch p.stock s
-	        join fetch p.suppliers sup
-	        join fetch p.categories c
-	        join fetch p.deposits d
-	        where p.id = :id
-	        """)
+			select distinct p from ProductEntity p
+			left join fetch p.unitMeasure u
+			left join fetch p.location l
+			left join fetch p.stock s
+			left join fetch p.suppliers r
+			left join fetch p.categories c
+			left join fetch p.brand b
+			left join fetch p.productDepositEntities pde
+			where p.id = :id
+			     """)
 	Optional<ProductEntity> findByIdWithAllRelations(@Param("id") UUID id);
 
 }

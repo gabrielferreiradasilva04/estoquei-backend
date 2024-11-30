@@ -51,6 +51,8 @@ public class TransactionEntity implements Serializable{
 	@LastModifiedDate
 	private LocalDateTime updateDate;
 	private Boolean active;
+	@Column(nullable = false)
+	private Boolean entry;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "transaction", fetch = FetchType.LAZY)
