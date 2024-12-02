@@ -15,6 +15,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.dtos.ResponseErrorDto;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.DuplicateRecordException;
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.EntityNotFoundException;
+import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.exceptions.QuantityMovementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -64,6 +65,14 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(DuplicateRecordException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResponseErrorDto handleDuplicadeRecordException(DuplicateRecordException e) {
+		return new ResponseErrorDto(HttpStatus.BAD_REQUEST.value()
+				, e.getMessage(),
+				null);
+	}
+	
+	@ExceptionHandler(QuantityMovementException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ResponseErrorDto handleQuantityMovementException(QuantityMovementException e) {
 		return new ResponseErrorDto(HttpStatus.BAD_REQUEST.value()
 				, e.getMessage(),
 				null);

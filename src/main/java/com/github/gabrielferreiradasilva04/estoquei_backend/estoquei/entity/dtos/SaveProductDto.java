@@ -14,8 +14,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record SaveProductDto(@NotBlank(message = "Campo obrigatorio") String code, @NotBlank(message = "Campo Obrigatorio") String description, 
-		BigDecimal priceCost, BigDecimal salePrice, 
-		Double minimumStock, Double quantityStock, Boolean active, @NotNull(message = "Selecione um estoque") StockEntity stock, 
+		BigDecimal priceCost, BigDecimal salePrice, Boolean active, @NotNull(message = "Selecione um estoque") StockEntity stock, 
 		@NotEmpty(message = "Selecione ao menos uma categoria")  List<CategoryEntity> categories, 
 		@NotNull(message="Selecione uma localizacao") LocationEntity location,
 		@NotNull(message = "Selecione uma unidade de medida") UnitMeasureEntity unitMeasure, @NotNull(message = "Campo obrigatorio") BrandEntity brand) {

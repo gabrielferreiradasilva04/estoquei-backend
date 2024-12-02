@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
 			left join fetch p.suppliers r
 			left join fetch p.categories c
 			left join fetch p.brand b
-			left join fetch p.productDepositEntities pde
+			left join fetch p.productDeposits pde
 			""")
 	List<ProductEntity> findAllWithMainRelations();
 
@@ -35,7 +35,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
 			left join fetch p.suppliers r
 			left join fetch p.categories c
 			left join fetch p.brand b
-			left join fetch p.productDepositEntities pde
+			left join fetch p.productDeposits pde
 			where p.id = :id
 			     """)
 	Optional<ProductEntity> findByIdWithAllRelations(@Param("id") UUID id);

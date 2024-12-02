@@ -14,8 +14,7 @@ import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.Supp
 import com.github.gabrielferreiradasilva04.estoquei_backend.estoquei.entity.UnitMeasureEntity;
 
 public record ResponseProductDto(UUID id,String code,String description, 
-		BigDecimal priceCost, BigDecimal salePrice, LocalDate registrationDate, LocalDateTime updateDate,
-		Double minimumStock, Boolean active,StockEntity stock, LocationEntity location,
+		BigDecimal priceCost, BigDecimal salePrice, LocalDate registrationDate, LocalDateTime updateDate, Boolean active,StockEntity stock, LocationEntity location,
 		UnitMeasureEntity unitMeasure, Set<SupplierEntity> suppliers, Set<CategoryEntity> categories, BrandEntity brand) {
 
 }

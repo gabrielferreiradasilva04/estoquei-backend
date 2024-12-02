@@ -108,7 +108,7 @@ public class StockEntity implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "stock", fetch = FetchType.LAZY)
-	private Set<TransactionEntity> transactions = new HashSet<TransactionEntity>();
+	private Set<MovementTypeEntity> movementTypeEntities = new HashSet<MovementTypeEntity>();
 	
 	@Override
 	public String toString() {

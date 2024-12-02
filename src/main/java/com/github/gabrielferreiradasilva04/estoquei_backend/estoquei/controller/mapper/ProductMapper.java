@@ -13,18 +13,16 @@ public interface ProductMapper {
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "productPhotos", ignore = true)
-	@Mapping(target = "quantityStock", ignore = true)
 	@Mapping(target = "registrationDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
 	@Mapping(target = "suppliers", ignore = true)
-	@Mapping(target = "productDepositEntities", ignore = true)
+	@Mapping(target = "productDeposits", ignore = true)
 	ProductEntity saveDtoToEntity(SaveProductDto dto); 
 	
 	@Mapping(target = "productPhotos", ignore = true)
-	@Mapping(target = "quantityStock", ignore = true)
 	@Mapping(target = "registrationDate", ignore = true)
 	@Mapping(target = "updateDate", ignore = true)
-	@Mapping(target = "productDepositEntities", ignore = true)
+	@Mapping(target = "productDeposits", ignore = true)
 	ProductEntity updateDtoToEntity(UpdateProductDto dto);  
 	
 	SaveProductDto entityToSaveDto(ProductEntity entity);

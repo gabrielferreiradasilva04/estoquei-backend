@@ -171,9 +171,7 @@ public class ProductService {
 		pUpdate.setCode(p.getCode().trim().toLowerCase());
 		pUpdate.setDescription(p.getDescription().trim().toLowerCase());
 		pUpdate.setActive(p.getActive());
-		pUpdate.setMinimumStock(p.getMinimumStock());
 		pUpdate.setPriceCost(p.getPriceCost());
-		pUpdate.setQuantityStock(p.getQuantityStock());
 		pUpdate.setSalePrice(p.getSalePrice());
 		
 		return pUpdate;

@@ -56,10 +56,10 @@ public class ProductEntity implements Serializable{
 	private BigDecimal priceCost;
 	@Column(nullable = false, scale = 2, precision = 18)
 	private BigDecimal salePrice;
-	@Column
-	private Double quantityStock;
-	@Column
-	private Double minimumStock;
+//	@Column
+//	private Double quantityStock;
+//	@Column
+//	private Double minimumStock;
 	@Column
 	private Boolean active;
 	@CreatedDate
@@ -102,7 +102,7 @@ public class ProductEntity implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	private Set<ProductDepositEntity> productDepositEntities = new HashSet<ProductDepositEntity>();
+	private Set<ProductDepositEntity> productDeposits = new HashSet<ProductDepositEntity>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "brand_id")
